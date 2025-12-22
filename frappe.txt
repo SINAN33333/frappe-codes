@@ -1,0 +1,67 @@
+>git clone https://github.com/frappe/frappe_docker.git
+cd frappe_docker
+
+>ls -l
+
+>frappe_docker
+
+>cp -R devcontainer-example .devcontainer
+
+> docker images
+
+> docker ps
+
+> docker compose -f .devcontainer/docker-compose.yml up -d
+
+> docker images
+
+> docker ps
+
+> docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer-frappe-1 bash
+
+> bench init --skip-redis-config-generation frappe-bench
+cd frappe-bench
+
+> bench set-config -g db_host mariadb
+bench set-config -g redis_cache redis://redis-cache:6379
+bench set-config -g redis_queue redis://redis-queue:6379
+bench set-config -g redis_socketio redis://redis-queue:6379
+
+> ./env/bin/pip install honcho
+
+> sed -i '/redis/d' ./Procfile
+
+> bench new-site --db-root-password 123 --admin-password admin --mariadb-user-host-login-scope=% sinank.localhost
+  Enter mysql super user [root]: root
+
+> bench --site sinank.localhost set-config developer_mode 1
+bench --site sinank.localhost clear-cache
+
+>  bench start
+
+> bench new-app student_management_system
+  App Title [Student Management System]: Student Management System
+  App Description: An app to manage student records
+  App Publisher: muhammed sinan 
+  App Email: msinannattukal@gmail.com
+  App License (agpl-3.0, apache-2.0, bsd-2-clause, bsd-3-clause, bsl-1.0, cc0-1.0, epl-2.0, gpl-2.0, gpl-3.0,lgpl-2.1, 
+  mit, mpl-2.0, unlicense) [mit]: 
+  Create GitHub Workflow action for unittests [y/N]: y
+  Branch Name [develop]: develop
+
+> bench start
+
+> bench --site sinank.localhost install-app student_management_system
+
+> bench start  
+
+-----------------------------------------------------------------------------------------------------------------------
+bench new-site --db-root-password 123 --admin-password admin --mariadb-user-host-login-scope=% sinank.localhost
+
+bench --site sinank.localhost set-config developer_mode 1
+bench --site sinank.localhost clear-cache
+
+bench new-app student_management_system
+
+bench --site sinank.localhost install-app student_management_system
+
