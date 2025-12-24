@@ -34,8 +34,8 @@ bench set-config -g redis_socketio redis://redis-queue:6379
 > bench new-site --db-root-password 123 --admin-password admin --mariadb-user-host-login-scope=% sinank.localhost
   Enter mysql super user [root]: root
 
-> bench --site sinank.localhost set-config developer_mode 1
-bench --site sinank.localhost clear-cache
+> bench --site (sinank).localhost set-config developer_mode 1
+bench --site (sinank).localhost clear-cache
 
 >  bench start
 
@@ -51,11 +51,26 @@ bench --site sinank.localhost clear-cache
 
 > bench start
 
-> bench --site sinank.localhost install-app student_management_system
+> bench --site <sinank>.localhost install-app student_management_system
 
 > bench start  
 
 -----------------------------------------------------------------------------------------------------------------------
+                                <<HOW DOWN OUR DOCKER CONTAINER>>
+> docker compose -f .devcontainer/docker-compose.yml up -d
+----------------------------------------------------------------------------------------------------------------------
+                              <<HOW RUNNING THE CUNTAINER>>
+>docker-compose -f .devcontainer/docker-compose.yml up -d
+>docker exec -e "TERM=xterm-256color" -w /workspace/development -it devcontainer-frappe-1 bash
+
+                              frappe@56e4d553afa8:/workspace/development/frappe-bench$ bench start
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 bench new-site --db-root-password 123 --admin-password admin --mariadb-user-host-login-scope=% sinank.localhost
 
 bench --site sinank.localhost set-config developer_mode 1
@@ -64,4 +79,5 @@ bench --site sinank.localhost clear-cache
 bench new-app student_management_system
 
 bench --site sinank.localhost install-app student_management_system
+---------------------------------------------------------------------------------------------------------------------
 
